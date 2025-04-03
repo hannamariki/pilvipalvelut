@@ -2,7 +2,7 @@ Jekyll:iä käyttävä sivusto
 
 GitHub Page Sivuni, jossa Jekyll teema
 
-## Tervetuloa GitHub Pages- Sivustolleni!
+### Tervetuloa GitHub Pages- Sivustolleni!
 
 Täältä löytyvät tehtäväpalautukset:
 
