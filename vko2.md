@@ -1,4 +1,4 @@
-###Viikon 2 tehtävä
+### Viikon 2 tehtävä
 
 Jekyll-sivuston automatisointi GitHub Actionsin avulla mahdollistaa sivuston automaattisen rakentamisen ja julkaisemisen. GitHub Actions workflow määrittelee, mitä tapahtuu, kun tietyt tapahtumat, kuten push, pull tai commit, tapahtuvat repositoriossa. Workflow on automatisoitu prosessi, jossa eri tehtäviä suoritetaan tietyssä järjestyksessä. Tällaisia vaiheita voivat olla koodin tarkistus ja testaus, Jekyllin sivuston rakentaminen ja sivuston julkaiseminen.
 
