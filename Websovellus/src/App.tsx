@@ -30,17 +30,17 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={(handleClick)}>
+        <button onClick={handleClick}>
           count is {count}
         </button>
         <div>
-          <LoginForm/>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+          <LoginForm />
+        </div>
+        <p className="read-the-docs">
+          Click on the Vite and React logos to learn more
+        </p>
+      </div> {/* ← tämä lisättiin */}
     </>
   )
 }
-
 export default App
