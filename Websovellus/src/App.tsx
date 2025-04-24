@@ -5,6 +5,12 @@ import './App.css'
 import LoginForm from './LoginForm';
 import ProductList from './ProductList';
 
+declare global {
+  interface Window {
+    _mtm?: any[];
+  }
+}
+
 function App() {
 //Asetetaan cookie
   const setCookie = (name: string, value: string, days: number) => {
@@ -24,10 +30,16 @@ function App() {
 
   const [count, setCount] = useState(getCookie('Count') | 0)
 
-  useEffect(() => {
-    console.log('Viesti efectifunktiosta');
-  
-  });
+  useEffect(() => {  
+    var _mtm = window._mtm = window._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+    const d=document, g=d.createElement('script'), s: HTMLScriptElement=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=  'https://pilvipalvelut-matomo.2.rahtiapp.fi/js/container_wiX44zhO.js'; 
+    if (s && s.parentNode) {
+      s.parentNode.insertBefore(g,s);
+    }
+  }, []);
+
 
   const handleClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>((event) => {
     console.log('Nappi painettu: (' + event.pageX + ', ' + event.pageY + ')');
