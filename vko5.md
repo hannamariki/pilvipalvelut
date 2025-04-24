@@ -1,3 +1,5 @@
 Harjoitustyönäni on tarkoitus tehdä portfolio. Analyytiikkaa voi hyödyntää portfoliosivustolla monipuolisesti ja tehokkaasti, varsinkin kun tavoitteenani on esitellä omaa osaamistani ja herättää kävijän kiinnostus. Esimerkiksi Matomon avulla voidaan seurata kävijämääriä, käyttäjien liikkeitä sivustolla, suosituimpia projekteja ja sitä, kuinka kauan aikaa eri sivuilla vietetään. Näiden tietojen avulla voisin arvioida, mitkä sisällöt toimivat hyvin ja mitkä jäävät vähemmälle huomiolle. 
 
 Portfoliossa analytiikka tarjoaa konkreettista palautetta siitä, miten sivustoani käytetään. Voin Mamoton avulla nähdä, jos jokin tietty projekti kerää paljon klikkauksia, jolloin voin korostaa sitä enemmän. Tai jos yhteydenottolomake jää vähälle huomiolle, voin kokeilla sen uudelleensijoittamista tai muotoilun parantamista. Näin portfolio kehittyy jatkuvasti käyttäjädatan ohjaamana.
+
+[Etusivu](index.md)
