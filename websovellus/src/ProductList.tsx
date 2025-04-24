@@ -26,18 +26,21 @@ function ProductList(){
         setProducts([...products, {...newProduct, id: docRef.id}]);
     };
 
-const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-        setNewName(name);
-        setNewPrice(parseFloat(value));
-    
-}
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+      
+        if (name === 'name') {
+          setNewName(value); // Tämä ohjaa tekstikentän sisältöä
+        } else if (name === 'price') {
+          setNewPrice(parseFloat(value));
+        }
+      };
 
     return (
         <div>
             <h2>Tuotelista</h2>
             <div>
-                <input type ="text" value={newName}
+                <input type ="text" name ="name" value={newName}
                 onChange={handleInputChange} placeholder="Tuotteen nimi" />
                 <input type ="number" value={newPrice}
                 onChange={handleInputChange} placeholder="Hinta" />
