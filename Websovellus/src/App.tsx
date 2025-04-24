@@ -5,7 +5,23 @@ import './App.css'
 import LoginForm from './LoginForm';
 
 function App() {
-  const [count, setCount] = useState(0)
+//Asetetaan cookie
+  const setCookie = (name: string, value: string, days: number) => {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie =`${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  };
+//luetaan cookie
+  const getCookie = (name: string) : number | 0 => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`;${name}=`);
+    if(parts.length === 2){
+      const num = parseInt(decodeURIComponent(parts.pop()?.split(';').shift() || ''), 10);
+      return num;
+    }
+    return 0;
+  };
+
+  const [count, setCount] = useState(getCookie('Count') | 0)
 
   useEffect(() => {
     console.log('Viesti efectifunktiosta');
@@ -15,7 +31,8 @@ function App() {
   const handleClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>((event) => {
     console.log('Nappi painettu: (' + event.pageX + ', ' + event.pageY + ')');
     setCount((count) => count + 1);
-  }, [setCount]);
+    setCookie('Count', "" + (count + 1), 1);
+  }, [setCookie]);
 
 
   return (
