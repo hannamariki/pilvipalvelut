@@ -26,16 +26,12 @@ function ProductList(){
         setProducts([...products, {...newProduct, id: docRef.id}]);
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-      
-        if (name === 'name') {
-          setNewName(value); // Tämä ohjaa tekstikentän sisältöä
-        } else if (name === 'price') {
-            const parsedPrice = parseFloat(value);
-            setNewPrice(isNaN(parsedPrice) ? 0 : parsedPrice);
-        }
-      };
+const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = event.target;
+        setNewName(name);
+        setNewPrice(parseFloat(value));
+    
+}
 
     return (
         <div>
