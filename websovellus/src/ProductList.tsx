@@ -21,7 +21,7 @@ function ProductList(){
     }, []);
 
     const addProduct = async () => {
-        const newProduct: Product = { id: '', name: newName, price: newPrice};
+        const newProduct: Product = { id: 'QMlCbAZVrdTgdfnYqqmV', name: newName, price: newPrice};
         const docRef = await addDoc(collection(db, 'product'), newProduct);
         setProducts([...products, {...newProduct, id: docRef.id}]);
     };
