@@ -28,9 +28,11 @@ function ProductList(){
 
 const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
-        setNewName(name);
+    if (name === 'name') {
+        setNewName(value);
+    } if (name === 'price') {
         setNewPrice(parseFloat(value));
-    
+    }
 }
 
     return (
@@ -39,7 +41,7 @@ const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             <div>
                 <input type ="text" name ="name" value={newName}
                 onChange={handleInputChange} placeholder="Tuotteen nimi" />
-                <input type ="number" value={newPrice}
+                <input type ="number" name='price' value={newPrice}
                 onChange={handleInputChange} placeholder="Hinta" />
                 <button onClick={addProduct}>Lisää tuote</button>
             </div>
