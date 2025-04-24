@@ -32,7 +32,8 @@ function ProductList(){
         if (name === 'name') {
           setNewName(value); // Tämä ohjaa tekstikentän sisältöä
         } else if (name === 'price') {
-          setNewPrice(parseFloat(value));
+            const parsedPrice = parseFloat(value);
+            setNewPrice(isNaN(parsedPrice) ? 0 : parsedPrice);
         }
       };
 
