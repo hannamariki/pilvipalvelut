@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import LoginForm from './LoginForm';
 import ProductList from './ProductList';
+import MatomoApi from './MatomoApi';
+
 
 declare global {
   interface Window {
@@ -41,6 +43,8 @@ function App() {
   }, []);
 
 
+  
+
   const handleClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>((event) => {
     console.log('Nappi painettu: (' + event.pageX + ', ' + event.pageY + ')');
     setCount((count) => count + 1);
@@ -68,6 +72,9 @@ function App() {
         </div>
         <div>
           <ProductList />
+        </div>
+        <div>
+          <MatomoApi />  
         </div>
         <p className="read-the-docs">
           Click on the Vite and React logos to learn more

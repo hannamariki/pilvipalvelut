@@ -1,36 +1,27 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios';
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+}
+
 function AnalyticsData() {
-  const [visits, setVisits] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = 'KORVAA_TALLA_OIKEALLA_TOKENILLA';
-
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://pilvipalvelut-matomo.2.rahtiapp.fi/index.php`, {
-            params: {
-              module: 'API',
-              method: 'VisitsSummary.get',
-              idSite: 1,
-              period: 'day',
-              date: 'last30',
-              format: 'json',
-              token_auth: token
-            }
-          }
-        );
-
+        const response = await axios.get('https://dummyjson.com/products');
         if (response.status === 200) {
-          setVisits(response.data);
+          setProducts(response.data.products); 
         }
       } catch (err) {
         console.error('Virhe tietojen haussa:', err);
-        setError(error);
+        setError('Tietojen hakeminen epäonnistui');
       } finally {
         setLoading(false);
       }
@@ -39,16 +30,16 @@ function AnalyticsData() {
     fetchData();
   }, []);
 
-  if (loading) return <p>Ladataan tietoja...</p>;
-  if (error) return <p>Virhe tietojen haussa</p>;
+  if (loading) return <p>Ladataan tuotteita...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <h2>Kävijätilastot (viimeiset 30 päivää)</h2>
+      <h2>Tuotteet DummyJSON API:sta</h2>
       <ul>
-        {visits && Object.entries(visits).map(([date, data]) => (
-          <li key={date}>
-            {date}: {(data as { nb_visits: number }).nb_visits} vierailua
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.title}: {product.price} €
           </li>
         ))}
       </ul>
