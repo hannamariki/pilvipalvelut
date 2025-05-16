@@ -1,27 +1,31 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import app from "../firebaseConfig"; // muuta polku oikein
+import app from "./firebaseConfig"; 
 
 function Login() {
   const auth = getAuth(app);
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("Kirjautunut: " + user.email);
-      // Ohjaa vaikka kirjalistaan: navigate('/books')
-    } catch (err) {
-      setError("Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.");
-      console.error(err);
-    }
-  };
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setError("");
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("Kirjautunut: " + user.email);
+     navigate("/books"); 
+
+  } catch (err) {
+    console.error("Kirjautumisvirhe:", err.code, err.message);
+    setError("Kirjautuminen epäonnistui: " + err.message);
+  }
+};
 
   return (
     <div>
