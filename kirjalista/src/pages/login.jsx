@@ -13,7 +13,11 @@ export default function Login() {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+<<<<<<< HEAD
       navigate('/books'); 
+=======
+      navigate('/books'); // ohjataan kirjalistaan
+>>>>>>> parent of 90680ec (Websovelluksen palautus)
     } catch (err) {
       setError(err.message);
     }
