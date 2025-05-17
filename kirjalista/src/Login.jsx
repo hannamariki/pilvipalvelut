@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import app from "./firebaseConfig"; 
+import app from "./firebaseConfig";
+import "./Login.css"; 
 
 function Login() {
   const auth = getAuth(app);
@@ -11,27 +12,40 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-const handleLogin = async (e) => {
-  e.preventDefault();
-  setError("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log("Kirjautunut: " + user.email);
-     navigate("/books"); 
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Kirjautunut: " + userCredential.user.email);
 
-  } catch (err) {
-    console.error("Kirjautumisvirhe:", err.code, err.message);
-    setError("Kirjautuminen epäonnistui: " + err.message);
-  }
-};
+     window._mtm.push({
+      event: "login_success",
+      email: email,
+    });
+
+
+      navigate("/books");
+    } catch (err) {
+      console.error("Kirjautumisvirhe:", err.code, err.message);
+
+    window._mtm.push({
+    event: "login_failure",
+    error: err.message,
+    });
+
+      setError("Kirjautuminen epäonnistui: " + err.message);
+    }
+  };
 
   return (
-    <div>
-      <h2>Kirjaudu sisään</h2>
-      <form onSubmit={handleLogin}>
-        <div>
+    <div className="login-container">
+      <h1 className="app-title">📚 Oma kirjahylly</h1>
+      <p className="welcome-text">Tervetuloa takaisin! Kirjaudu sisään käyttääksesi kirjahyllyäsi.</p>
+
+      <form onSubmit={handleLogin} className="login-form">
+        <div className="form-group">
           <label htmlFor="email">Sähköposti:</label>
           <input
             type="email"
@@ -41,7 +55,8 @@ const handleLogin = async (e) => {
             required
           />
         </div>
-        <div>
+
+        <div className="form-group">
           <label htmlFor="password">Salasana:</label>
           <input
             type="password"
@@ -51,8 +66,10 @@ const handleLogin = async (e) => {
             required
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Kirjaudu sisään</button>
+
+        {error && <p className="error-message">{error}</p>}
+
+        <button type="submit" className="login-button">Kirjaudu sisään</button>
       </form>
     </div>
   );

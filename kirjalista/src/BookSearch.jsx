@@ -4,7 +4,7 @@ import app from "./firebaseConfig";
 
 const db = getFirestore(app);
 
-function BookSearch() {
+function BookSearch({ onBookAdd }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
@@ -18,11 +18,23 @@ function BookSearch() {
   const addBook = async (book) => {
     const title = book.volumeInfo.title;
     const author = book.volumeInfo.authors?.join(", ") || "Tuntematon";
-    await addDoc(collection(db, "books"), {
+
+    const docRef = await addDoc(collection(db, "books"), {
       title,
       author,
+      read: false,
     });
-    alert("Kirja lisätty!");
+
+    const newBook = {
+      id: docRef.id,
+      title,
+      author,
+      read: false,
+    };
+
+    if (typeof onBookAdd === "function") {
+      onBookAdd(newBook); // lähetetään uusi kirja parent-komponentille
+    }
   };
 
   return (

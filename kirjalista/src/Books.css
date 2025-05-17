@@ -86,3 +86,22 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+}
+
+.logout-button {
+  background-color: #ff6666;
+  color: rgb(8, 0, 0);
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}

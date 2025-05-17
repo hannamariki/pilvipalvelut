@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc,updateDoc,} from "firebase/firestore";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import app from "./firebaseConfig";
-import BookSearch from "./BookSearch"; 
+import BookSearch from "./BookSearch";
+import "./Books.css";
 
 const db = getFirestore(app);
 
@@ -10,6 +13,8 @@ function Books() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [activeTab, setActiveTab] = useState("list");
+  const auth = getAuth(app);
+  const navigate = useNavigate();
 
   const fetchBooks = async () => {
     const querySnapshot = await getDocs(collection(db, "books"));
@@ -32,52 +37,92 @@ function Books() {
       author,
       read: false,
     });
+
+    window._mtm.push({
+    event: "book_added",
+    title: title,
+    author: author,
+  });
+
     setTitle("");
     setAuthor("");
     fetchBooks();
   };
 
-  const handleToggleRead = async (bookId, currentStatus) => {
+    const handleToggleRead = async (bookId, currentStatus) => {
     const bookRef = doc(db, "books", bookId);
     await updateDoc(bookRef, {
       read: !currentStatus,
     });
+
+    window._mtm.push({
+    event: "book_read_status_changed",
+    bookId: bookId,
+    read: !currentStatus,
+  });
+
+
     fetchBooks();
   };
 
   const handleDelete = async (bookId) => {
     await deleteDoc(doc(db, "books", bookId));
+
+    window._mtm.push({
+    event: "book_deleted",
+    bookId: bookId,
+  });
+
     fetchBooks();
   };
 
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
+
   return (
-    <div>
+    <div className="books-container">
       <h2>📖 Kirjahyllysi</h2>
 
-     
-      <div style={{ marginBottom: "1rem" }}>
+      <div className="tab-buttons">
         <button onClick={() => setActiveTab("list")}>📚 Oma lista</button>
         <button onClick={() => setActiveTab("add")}>➕ Lisää kirja</button>
         <button onClick={() => setActiveTab("search")}>🔍 Hae kirjastoista</button>
+        <button onClick={handleLogout} className="logout-button"> 🚪 Kirjaudu ulos</button>
       </div>
 
       {activeTab === "list" && (
-        <ul>
-          {books.map((book) => (
-            <li key={book.id}>
-              <strong>{book.title}</strong> — {book.author} {" "}
-              <span style={{ color: book.read ? "green" : "gray" }}>
-                [{book.read ? "Luettu" : "Lukematta"}]
-              </span>
-              <button onClick={() => handleToggleRead(book.id, book.read)}>Merkitse {book.read ? "lukematta" : "luetuksi"}</button>
-              <button onClick={() => handleDelete(book.id)}>🗑 Poista</button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="book-list">
+            {books.map((book) => (
+              <li key={book.id} className="book-item">
+                <div>
+                  <strong>{book.title}</strong> — {book.author}{" "}
+                  <span className={`status ${book.read ? "read" : "unread"}`}>
+                    [{book.read ? "Luettu" : "Lukematta"}]
+                  </span>
+                </div>
+                <div className="book-actions">
+                  <button onClick={() => handleToggleRead(book.id, book.read)}>
+                    Merkitse {book.read ? "lukematta" : "luetuksi"}
+                  </button>
+                  <button
+                    onClick={() => handleDelete(book.id)}
+                    className="delete-button"
+                  >
+                    🗑 Poista
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+    
+        </>
       )}
 
       {activeTab === "add" && (
-        <form onSubmit={handleAddBook}>
+        <form onSubmit={handleAddBook} className="book-form">
           <input
             type="text"
             placeholder="Kirjan nimi"
