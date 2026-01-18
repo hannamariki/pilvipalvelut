@@ -1,0 +1,3 @@
+Tämä projekti on toteutettu osana tietojenkäsittelyn tradenomiopintojani Haaga-Heliassa. Projektin keskiössä on Kirjalista-sovellus, joka on rakennettu modernilla React- ja Vite-teknologialla. Sovelluksen avulla käyttäjä voi hallinnoida omaa kirjakokoelmaansa (lisätä, hakea ja poistaa kirjoja).
+
+Projektin päätavoitteena on ollut demonstroida nykyaikaisen web-sovelluksen elinkaarta ja teknistä infrastruktuuria. Kurssilla keskityttiin kontitukseen, sekä automaattiseen pilvijulkaisuun. Työnkulku on automatisoitu GitHub Actions -putkella, joka ajaa testit ja buildaa sovelluksen, ja kokonaisuus on konfiguroitu julkaistavaksi Microsoft Azure -pilvipalveluun.
